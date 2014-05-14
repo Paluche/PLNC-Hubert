@@ -1,3 +1,5 @@
+-- RPN calculator
+
 module RPN where
 
 import Prelude
