@@ -4,6 +4,7 @@ module RPN where
 
 import Prelude
 import System.IO
+import Peano
 
 type Stack  = [Int]
 
