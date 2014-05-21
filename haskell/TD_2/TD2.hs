@@ -69,15 +69,43 @@ groupProb (x : y : xs) =  if (fst x) == (fst y)
 canonize :: Ord a => Prob a -> Prob a
 canonize (Prob l) = Prob $ groupProb $ sort l
 
--- Test list for canonize
-testList :: Prob Integer
+-- Test list for canonize.
 testList = Prob [(1, 1%4), (1, 1%4), (1, 1%4), (2, 1%4)]
-dice :: Prob Integer
 dice = sameProbability [1..6]
 
--- Check the probability to obtain twice the same number on two dices.
+-- In order to check the probability to obtain twice the same number on two
+-- dices.
 double :: Prob Bool
 double = do
     x <- dice
     y <- dice
     return $ x == y
+
+-- In order to check the probability of having a number with the sum of two
+-- dices.
+pair :: Prob Int
+pair = do
+  x <- dice
+  y <- dice
+  return $ x + y
+
+-- Let's play: cure or kill people with statistics.
+-- Probability to be sick of the rare disease.
+sick :: Prob Bool
+sick = Prob [(True, 1%100000), (False, 99999%100000)]
+
+-- Probability distribution of corresponding to the result of the test that
+-- detect the disease. The test is reliable at 99.99% (999%1000)
+
+positive :: Bool -> Prob Bool
+positive True  = Prob [(True, 999%1000), (False, 1%1000)]
+positive False = Prob [(True, 1%1000), (False, 999%1000)]
+
+renormalize :: Prob a -> Prob a
+renormalize = undefined
+
+results :: Prob Bool
+results = do
+    x <- sick
+    y <- positive x
+    return $ y /= x
