@@ -159,10 +159,7 @@ greaterThan30 x y = do
 return (a, b)
 
 -- Nothing magical here: this gets expanded like this
--- x >>= (\a ->
-          y >>= (\b ->
-                 --         --                 guard (a * b > 30) >>= (\ ->
-                                                                       --         --                                          return (a, b))))
+ x >>= (\a -> y >>= (\b -> guard (a * b > 30) >>= (\ -> return (a, b))))
 
 -- The Reader monad lets you retrieve an environment from within
 -- the computation.
@@ -203,8 +200,8 @@ return ("Hello " ++ fromJust firstName)
 -- function calls.
 hello2 :: Reader [(String, String)] String
 hello2 = do
-greetings <- hello
-return greetings
+    greetings <- hello
+    return greetings
 
 -- Classical Monad => Applicative transformation.
 instance Applicative (Reader r) where
