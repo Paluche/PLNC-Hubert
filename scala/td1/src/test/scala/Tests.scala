@@ -48,38 +48,38 @@ class Tests extends FlatSpec with Matchers {
     List(2, 4, 6).all(isEven) should be (true)
   }
 
-//  it should "fail with an odd number in the list" in {
-//    List(2, 4, 5, 6).all(isEven) should be (false)
-//  }
-//
-//  "myWhile" should "not evaluate actions when false" in {
-//    var c = 0
-//    myWhile(false, c += 1)
-//    c should equal (0)
-//  }
-//
-//  it should "not evaluate action several times" in {
-//    var c = 0
-//    myWhile({c += 1; false}, c += 10)
-//    c should equal (1)
-//  }
-//
-//  it should "evaluate actions while true" in {
-//    var c = 0
-//    var x = 0
-//    myWhile(x < 4, { c += x; x+= 1 })
-//    c should equal (6)
-//  }
-//
-//  "doWhile" should "work with an automatic conversion" in {
-//    var x = 0
-//    var c = 0
-//    (x < 4) doWhile {
-//      c += x
-//      x += 1
-//    }
-//    c should equal(6)
-//  }
+  it should "fail with an odd number in the list" in {
+    List(2, 4, 5, 6).all(isEven) should be (false)
+  }
+
+  "myWhile" should "not evaluate actions when false" in {
+    var c = 0
+    myWhile(false, c += 1)
+    c should equal (0)
+  }
+
+  it should "not evaluate action several times" in {
+    var c = 0
+    myWhile({c += 1; false}, c += 10)
+    c should equal (1)
+  }
+
+  it should "evaluate actions while true" in {
+    var c = 0
+    var x = 0
+    myWhile(x < 4, { c += x; x+= 1 })
+    c should equal (6)
+  }
+
+  "doWhile" should "work with an automatic conversion" in {
+    var x = 0
+    var c = 0
+    (x < 4) doWhile {
+      c += x
+      x += 1
+    }
+    c should equal(6)
+  }
 //
 //  "a Complex" should "print properly" in {
 //    Complex(0, 0).toString should equal("0.0")

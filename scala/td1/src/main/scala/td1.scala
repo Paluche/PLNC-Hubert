@@ -7,6 +7,17 @@ object TD1
   // Placer ici le code de isOdd & friends
   def isOdd(x: Int): Boolean = if (x % 2 == 0) false else true
   def isEven(x: Int): Boolean = !isOdd(x)
+  def myWhile(t: => Boolean, f: => Any ) {
+    if (t) {
+      f
+      myWhile(t, f)
+    }
+  }
+
+ // def doWhile(t: => Boolean, f: => Any) {
+ //   f
+ //   if(t) doWhile(t, f)
+ // }
 }
 
 class ExtSeq[+T](s : Seq[T])
