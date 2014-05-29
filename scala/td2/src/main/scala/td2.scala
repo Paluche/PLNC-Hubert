@@ -5,21 +5,19 @@ import rx.lang.scala._
 
 object TD2 {
   def fromURL(url: String): Observable[Char] =
-    Observable.defer( Observable[Char] {(
-      subscriber: Subscriber[Char]) =>
-      println(s"requesting ${url}")
-      val buffer: BufferedSource = scala.io.Source.fromURL(url)
+    Observable.defer(Observable.from(scala.io.Source.fromURL(url).toIterable, schedulers.IOScheduler.apply))
 
-     while(buffer.hasNext && !subscriber.isUnsubscribed)
-       subscriber.onNext(buffer.next)
+  def getContent(url: String): Observable[String] =
+    Observable.defer( Observable[String] {
+    (subscriber: Subscriber[String]) =>
+      var observableFromURL: Observable[Char] = fromURL(url)
+      var string: String = ""
 
-      subscriber.onCompleted
-   }).subscribeOn(schedulers.IOScheduler.apply)
-
-  //def getContent(url: String): Observable[String] = Observable[String] {
-  //  (subscriber: Subscriver[String]) =>
-  //    val observableFromURL: Observable[Char] =
-  //}
+      observableFromURL.subscribe(
+        { (c: Char) => string = string :+ c },
+        { (t: Throwable) => println(s"Exception: $t") },
+        { () =>  subscriber.onNext(string)})
+    })
 }
 
 
@@ -29,11 +27,17 @@ object Main extends App
   import TD2._
 
   println("Start, instanciate fromURL(Google)")
-  val google: Observable[Char] = fromURL("http://www.google.fr")
+  //val google: Observable[Char] = fromURL("http://www.rfc1149.net/blog/")
+  //google.subscribe(
+  //  { n => println(n) },
+  //  { t: Throwable => println(s"Exception: $t") },
+  //  { () => println("Observable is terminated") })
 
-  google.subscribe(
+  val googleStr: Observable[String] = getContent("http://www.rfc1149.net/blog/")
+  googleStr.subscribe(
     { n => println(n) },
     { t: Throwable => println(s"Exception: $t") },
     { () => println("Observable is terminated") })
+
 }
 
