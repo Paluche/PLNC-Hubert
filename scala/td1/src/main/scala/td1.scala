@@ -46,6 +46,8 @@ case class Complex(real: Double, im: Double) {
         real.toString + "+" + im.toString + "i"
       else
         real.toString + im.toString + "i"
+
+  def reciprocal: Complex = new Complex(real, -im)
 }
 
 

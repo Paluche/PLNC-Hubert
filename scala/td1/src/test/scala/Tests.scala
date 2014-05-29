@@ -89,11 +89,11 @@ class Tests extends FlatSpec with Matchers {
     Complex(1.2, -3.4).toString should equal("1.2-3.4i")
     Complex(0, -1.2).toString should equal("-1.2i")
   }
-//
-//  it should "have a proper reciprocal" in {
-//    Complex(1.2, 3.4).reciprocal.toString should equal("1.2-3.4i")
-//  }
-//
+
+  it should "have a proper reciprocal" in {
+    Complex(1.2, 3.4).reciprocal.toString should equal("1.2-3.4i")
+  }
+
 //  it should "handle complex addition" in {
 //    Complex(1, 2) + Complex(3, 4) should equal(Complex(4, 6))
 //  }
