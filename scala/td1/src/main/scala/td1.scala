@@ -22,6 +22,7 @@ object ExtSeq {
   implicit def toExtSeq[T](s: Seq[T]): ExtSeq[T] = new ExtSeq(s)
 }
 
+
 class ExtCond(c: => Boolean ) {
   def doWhile(f: => Any) {
     while (c) f
@@ -31,6 +32,22 @@ class ExtCond(c: => Boolean ) {
 object ExtCond {
   implicit def toExtCond(c: => Boolean): ExtCond = new ExtCond(c)
 }
+
+
+case class Complex(real: Double, im: Double) {
+  override def toString =
+      if ((real == 0) && (im == 0))
+          "0.0"
+      else if (real == 0)
+        im.toString + "i"
+      else if (im == 0)
+        real.toString
+      else if (im > 0)
+        real.toString + "+" + im.toString + "i"
+      else
+        real.toString + im.toString + "i"
+}
+
 
 object Main extends App
 {

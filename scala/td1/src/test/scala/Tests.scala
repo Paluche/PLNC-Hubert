@@ -2,8 +2,8 @@ import org.scalatest._
 
 import fr.enst.plnc2014.td1.TD1._
 import fr.enst.plnc2014.td1.ExtSeq._
-// import fr.enst.plnc2014.td1.Complex
-// import fr.enst.plnc2014.td1.Complex._
+import fr.enst.plnc2014.td1.Complex
+import fr.enst.plnc2014.td1.Complex._
 import fr.enst.plnc2014.td1.ExtCond._
 
 class Tests extends FlatSpec with Matchers {
@@ -80,15 +80,15 @@ class Tests extends FlatSpec with Matchers {
     }
     c should equal(6)
   }
-//
-//  "a Complex" should "print properly" in {
-//    Complex(0, 0).toString should equal("0.0")
-//    Complex(0, 1.2).toString should equal("1.2i")
-//    Complex(1.2, 0).toString should equal("1.2")
-//    Complex(1.2, 3.4).toString should equal("1.2+3.4i")
-//    Complex(1.2, -3.4).toString should equal("1.2-3.4i")
-//    Complex(0, -1.2).toString should equal("-1.2i")
-//  }
+
+  "a Complex" should "print properly" in {
+    Complex(0, 0).toString should equal("0.0")
+    Complex(0, 1.2).toString should equal("1.2i")
+    Complex(1.2, 0).toString should equal("1.2")
+    Complex(1.2, 3.4).toString should equal("1.2+3.4i")
+    Complex(1.2, -3.4).toString should equal("1.2-3.4i")
+    Complex(0, -1.2).toString should equal("-1.2i")
+  }
 //
 //  it should "have a proper reciprocal" in {
 //    Complex(1.2, 3.4).reciprocal.toString should equal("1.2-3.4i")
