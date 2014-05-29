@@ -2,19 +2,24 @@ package fr.plnc.td2
 
 import scala.io._
 import rx.lang.scala._
-import rx.lang.scala.schedulers
 
 object TD2 {
-  def fromURL(url: String): Observable[Char] = Observable[Char] {
-    (subscriber: Subscriber[Char]) =>
+  def fromURL(url: String): Observable[Char] =
+    Observable.defer( Observable[Char] {(
+      subscriber: Subscriber[Char]) =>
       println(s"requesting ${url}")
       val buffer: BufferedSource = scala.io.Source.fromURL(url)
 
-      while(buffer.hasNext && !subscriber.isUnsubscribed)
-        subscriber.onNext(buffer.next)
+     while(buffer.hasNext && !subscriber.isUnsubscribed)
+       subscriber.onNext(buffer.next)
 
       subscriber.onCompleted
-    }
+   }).subscribeOn(schedulers.IOScheduler.apply)
+
+  //def getContent(url: String): Observable[String] = Observable[String] {
+  //  (subscriber: Subscriver[String]) =>
+  //    val observableFromURL: Observable[Char] =
+  //}
 }
 
 
