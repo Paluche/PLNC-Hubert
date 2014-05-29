@@ -4,7 +4,7 @@ import fr.enst.plnc2014.td1.TD1._
 import fr.enst.plnc2014.td1.ExtSeq._
 // import fr.enst.plnc2014.td1.Complex
 // import fr.enst.plnc2014.td1.Complex._
-// import fr.enst.plnc2014.td1.ExtCond._
+import fr.enst.plnc2014.td1.ExtCond._
 
 class Tests extends FlatSpec with Matchers {
 

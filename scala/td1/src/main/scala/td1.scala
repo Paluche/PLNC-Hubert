@@ -7,29 +7,29 @@ object TD1
   // Placer ici le code de isOdd & friends
   def isOdd(x: Int): Boolean = if (x % 2 == 0) false else true
   def isEven(x: Int): Boolean = !isOdd(x)
-  def myWhile(t: => Boolean, f: => Any ) {
-    if (t) {
-      f
-      myWhile(t, f)
-    }
+  def myWhile(c: => Boolean, f: => Any ) {
+    while (c) f
   }
-
- // def doWhile(t: => Boolean, f: => Any) {
- //   f
- //   if(t) doWhile(t, f)
- // }
 }
 
-class ExtSeq[+T](s : Seq[T])
-{
+class ExtSeq[+T](s : Seq[T]) {
   // Here we must apply a global or between f of all the element of the Seq
   def any(f: T => Boolean): Boolean = s.exists(f)
   def all(f: T => Boolean): Boolean = s.count(f) == s.length
 }
 
-object ExtSeq
-{
+object ExtSeq {
   implicit def toExtSeq[T](s: Seq[T]): ExtSeq[T] = new ExtSeq(s)
+}
+
+class ExtCond(c: => Boolean ) {
+  def doWhile(f: => Any) {
+    while (c) f
+  }
+}
+
+object ExtCond {
+  implicit def toExtCond(c: => Boolean): ExtCond = new ExtCond(c)
 }
 
 object Main extends App
