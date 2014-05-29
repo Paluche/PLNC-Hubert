@@ -1,6 +1,7 @@
 package fr.enst.plnc2014.td1
 
 import scala.collection._
+import scala.math._
 
 object TD1
 {
@@ -47,9 +48,22 @@ case class Complex(real: Double, im: Double) {
       else
         real.toString + im.toString + "i"
 
-  def reciprocal: Complex = new Complex(real, -im)
+  def reciprocal: Complex = Complex(real, -im)
+
+  def +(c: Complex): Complex = Complex(real + c.real, im + c.im)
+  def -(c: Complex): Complex = Complex(real - c.real, im - c.im)
+  def *(c: Complex): Complex = Complex((real * c.real) - (im * c.im),
+                                       (real * c.im + c.real * im))
+  def abs: Double = sqrt(real*real + im*im)
+  def /(c: Complex): Complex = Complex(((real * c.real) + (im * c.im))/ (c.abs * c.abs),
+                                       ((im * c.real) - (real * c.im))/(c.abs * c.abs))
+  def exp: Complex = Complex((math.exp(real) * cos(im)), (math.exp(real) * sin(im)))
 }
 
+object Complex {
+  // All double are Complex with a imaginary part null.
+  implicit def toComplex(d: Double): Complex = Complex(d, 0)
+}
 
 object Main extends App
 {

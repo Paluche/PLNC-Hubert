@@ -94,15 +94,41 @@ class Tests extends FlatSpec with Matchers {
     Complex(1.2, 3.4).reciprocal.toString should equal("1.2-3.4i")
   }
 
-//  it should "handle complex addition" in {
-//    Complex(1, 2) + Complex(3, 4) should equal(Complex(4, 6))
-//  }
-//
-//  it should "handle addition with an integer" in {
-//    Complex(1, 2) + 3 should equal(Complex(4, 2))
-//    3 + Complex(1, 2) should equal(Complex(4, 2))
-//  }
-//
+  it should "handle complex addition" in {
+    Complex(1, 2) + Complex(3, 4) should equal(Complex(4, 6))
+  }
+
+  it should "handle addition with an integer" in {
+    Complex(1, 2) + 3 should equal(Complex(4, 2))
+    3 + Complex(1, 2) should equal(Complex(4, 2))
+  }
+
+  it should "handle complex substraction" in {
+    Complex(1, 2) - Complex(3, 4) should equal(Complex(-2, -2))
+  }
+
+  it should "handle substraction with an integer" in {
+    Complex(1, 2) - 3 should equal(Complex(-2, 2))
+    3 - Complex(1, 2) should equal(Complex(2, -2))
+  }
+
+  it should "handle complex multiplication" in {
+    Complex(1, 2) * Complex(3, 4) should equal(Complex(-5,10))
+  }
+
+  it should "handle multiplication with an integer" in {
+    Complex(1, 2) * 3 should equal(Complex(3, 6))
+    3 * Complex(1, 2) should equal(Complex(3, 6))
+  }
+
+  it should "have a proper abs" in {
+    Complex(3,4).abs should equal(5)
+  }
+
+  it should "have complex division" in {
+    Complex(1, 2) / Complex (3, 4) should equal(Complex(0.44, 0.08))
+  }
+
 //  "solveQueens" should "find the unique solution for 1 queen" in {
 //    var l = List[(Int, Int)]()
 //    solveQueens(1, l :::= _)
