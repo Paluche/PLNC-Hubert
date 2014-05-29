@@ -129,23 +129,23 @@ class Tests extends FlatSpec with Matchers {
     Complex(1, 2) / Complex (3, 4) should equal(Complex(0.44, 0.08))
   }
 
-//  "solveQueens" should "find the unique solution for 1 queen" in {
-//    var l = List[(Int, Int)]()
-//    solveQueens(1, l :::= _)
-//    l should equal (List((1, 1)))
-//  }
-//
-//  it should "not find any solution for 2 and 3 queens" in {
-//    var n = 0
-//    solveQueens(2, _ => n += 1)
-//    solveQueens(3, _ => n += 1)
-//    n should equal (0)
-//  }
-//
-//  it should "find all solutions for 8 queens" in {
-//    var n = 0
-//    solveQueens(8, _ => n += 1)
-//    n should equal (92)
-//  }
+  "solveQueens" should "find the unique solution for 1 queen" in {
+    var l = List[(Int, Int)]()
+    solveQueens(1, l :::= _)
+    l should equal (List((1, 1)))
+  }
+
+  it should "not find any solution for 2 and 3 queens" in {
+    var n = 0
+    solveQueens(2, _ => n += 1)
+    solveQueens(3, _ => n += 1)
+    n should equal (0)
+  }
+
+  it should "find all solutions for 8 queens" in {
+    var n = 0
+    solveQueens(8, _ => n += 1)
+    n should equal (92)
+  }
 
 }

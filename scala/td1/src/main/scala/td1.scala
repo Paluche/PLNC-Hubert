@@ -11,6 +11,56 @@ object TD1
   def myWhile(c: => Boolean, f: => Any ) {
     while (c) f
   }
+
+  // The problem of the N queens, which I didn't heard about before this
+  // work, is to find how all the possible position of N queens on a chess
+  // board game which size is N*N square, with the N queen being no danger
+  // for the other one. In the chess game the queen can attack in every
+  // direction. So if a queen is at a position (X, Y) she's blocking every
+  // position responding to the equations (X, _), (_, Y), (X + N, Y + N) and
+  // (X + N, Y - N) (N could be negative)
+  // Since we must place N queen on a N*N square and each queen is blocking a
+  // row the solution is necessarly one queen by row, we are going to place
+  // the queens row by row. Each time a place is available for a queen for
+  // place it and we call again the function that will this time check the
+  // position available for the next row.
+
+  // Function to determinate if the asked position is a available postion for a
+  // queen.
+  def positionFree(posCol: Int, posRow: Int,
+                   queens: List[(Int, Int)]): Boolean = {
+    // For each queen
+    for ((qCol: Int, qRow: Int) <- queens) {
+      if (posCol == qCol) // Same colone as a queen
+        return false
+      else if (posRow == qRow) {// Same row as a queen /!\ Should not happend
+        return false
+        println("This situation should not happend");
+      } else if (abs(posCol - qCol) == abs(posRow - qRow)) {
+        // On a diagonal of the queen
+        return false
+      }
+    }
+    true
+  }
+
+  // Function to do a row. For each row every place available for a queen
+  // create a leaf where the we check if the this position leads
+  def doRow(rowNb: Int, numberOfQueens: Int, queens: List[(Int, Int)],
+            f: List[(Int, Int)] => Unit): Unit = {
+    for (col: Int <- 1 to numberOfQueens) {
+      if (positionFree(col, rowNb, queens)) {
+          val newQueens = queens:+ (col, rowNb)
+          if (rowNb == numberOfQueens) {
+            // We have placed the number of queens recommanded.
+            f (newQueens.toList)
+          } else  doRow(rowNb + 1, numberOfQueens, newQueens, f)
+      }
+    }
+  }
+
+  def solveQueens(numberOfQueens: Int, f: List[(Int, Int)] => Unit): Unit =
+    doRow(1, numberOfQueens, List[(Int, Int)](), f)
 }
 
 class ExtSeq[+T](s : Seq[T]) {
@@ -37,26 +87,26 @@ object ExtCond {
 
 case class Complex(real: Double, im: Double) {
   override def toString =
-      if ((real == 0) && (im == 0))
-          "0.0"
-      else if (real == 0)
-        im.toString + "i"
-      else if (im == 0)
-        real.toString
-      else if (im > 0)
-        real.toString + "+" + im.toString + "i"
-      else
-        real.toString + im.toString + "i"
+  if ((real == 0) && (im == 0))
+    "0.0"
+  else if (real == 0)
+    im.toString + "i"
+  else if (im == 0)
+    real.toString
+  else if (im > 0)
+    real.toString + "+" + im.toString + "i"
+  else
+    real.toString + im.toString + "i"
 
   def reciprocal: Complex = Complex(real, -im)
 
   def +(c: Complex): Complex = Complex(real + c.real, im + c.im)
   def -(c: Complex): Complex = Complex(real - c.real, im - c.im)
   def *(c: Complex): Complex = Complex((real * c.real) - (im * c.im),
-                                       (real * c.im + c.real * im))
+    (real * c.im + c.real * im))
   def abs: Double = sqrt(real*real + im*im)
   def /(c: Complex): Complex = Complex(((real * c.real) + (im * c.im))/ (c.abs * c.abs),
-                                       ((im * c.real) - (real * c.im))/(c.abs * c.abs))
+    ((im * c.real) - (real * c.im))/(c.abs * c.abs))
   def exp: Complex = Complex((math.exp(real) * cos(im)), (math.exp(real) * sin(im)))
 }
 
