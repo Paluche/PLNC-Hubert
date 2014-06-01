@@ -54,13 +54,19 @@ object TD2 {
           subscriber.onNext(j.asJsObject.getFields("timestamp").head.convertTo[Int]) })
       })
   )
+
+  def getTraktJSON(path: String, args: Iterable[String] = List()): Observable[JsValue] =
+  getJSON(traktAPIURL + path + ".json/" + traktAPIKey + "/" + args.mkString("/"))
 }
-
-
 
 object Main extends App
 {
   import TD2._
   traktTimestamp.subscribe({(t: Int) => println(s"Time: ${t}")})
+
+  getTraktJSON("show/season", List("the-walking-dead","1")).subscribe(
+    {x => println(x.prettyPrint)},
+    { (t: Throwable) => println(s"Exception: $t") },
+    { () => println("Observable is terminated") })
 }
 
