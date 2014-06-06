@@ -56,7 +56,14 @@ object TD2 {
   )
 
   def getTraktJSON(path: String, args: Iterable[String] = List()): Observable[JsValue] =
-  getJSON(traktAPIURL + path + ".json/" + traktAPIKey + "/" + args.mkString("/"))
+    getJSON(traktAPIURL + path + ".json/" + traktAPIKey + "/" + args.mkString("/"))
+
+  def getTraktMap(path: String, args: Iterable[String] = List()): Observable[Map[String, JsValue]] = (
+    Observable.defer(Observable[Map[String, JsValue]] {
+      (subscriber: Subscriber[Map[String, JsValue]]) =>
+        getTraktJSON(path, args).subscribe(
+        { (j: JsValue) => subscriber.onNext(j.convertTo[Map[String, JsValue]]) } )
+      }))
 }
 
 object Main extends App
@@ -64,7 +71,12 @@ object Main extends App
   import TD2._
   traktTimestamp.subscribe({(t: Int) => println(s"Time: ${t}")})
 
-  getTraktJSON("show/season", List("the-walking-dead","1")).subscribe(
+  getTraktJSON("show/season", List("the-walking-dead","2")).subscribe(
+    {x => println(x.prettyPrint)},
+    { (t: Throwable) => println(s"Exception: $t") },
+    { () => println("Observable is terminated") })
+
+  getTraktMap("show/season", List("the-walking-dead","2")).subscribe(
     {x => println(x.prettyPrint)},
     { (t: Throwable) => println(s"Exception: $t") },
     { () => println("Observable is terminated") })
