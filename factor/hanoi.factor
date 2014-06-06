@@ -1,0 +1,1 @@
+/opt/factor/work/hanoi/hanoi.factor
