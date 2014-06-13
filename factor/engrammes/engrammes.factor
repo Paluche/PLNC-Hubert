@@ -1,10 +1,89 @@
 ! Copyright (C) 2014 Your name.
 ! See http://factorcode.org/license.txt for BSD license.
-USING: math math.primes math.primes.factors kernel sequences ;
+USING: math math.primes math.primes.factors kernel sequences peg.ebnf combinators ;
 IN: engrammes
 
-! TODO rot and -rot words are deprecated.
 
+! This is the work I've been working all day long, it's an attempt to factorize
+! the funciton >engramme. But the algorithm is worse and I think I've lost
+! enough time on this exercise, I also have a project that doesn't go ahead for
+! the same reasons,  I don't know the language and I lose a lot of time on
+! looking on how to do what I want to do. Not succeeding and losing that much
+! time just gets me angry, so before I kill someone I'll stop there.
+
+! : compose ( primeref seq -- str )
+!     over ! primeref seq primeref
+!     [
+!         dup             ! primeref seq seq
+!         first           ! primeref seq factor
+!         dup             ! primeref seq factor factor
+!         first           ! primeref seq factor prime
+!     ] dip               ! primeref seq factor prime primeref
+!     2dup = [
+!                         ! primeref seq factor prime primeref
+!         2drop last nip  ! primeref exp
+!         >engramme       ! primeref str
+!         nip             ! str
+!     ] [
+!         > [
+!                         ! primeref seq factor
+!             3drop "0"   ! str
+!         ] [
+!                         ! primeref seq factor
+!             drop        ! primeref seq
+!             rest        ! primeref rest
+!             compose     ! str
+!         ]
+!     ] ;
+!
+! : >engramme ( x -- str ) {
+!     { 0 [ "0" ] }
+!     { 1 [ "1" ] }
+!     [
+!         group-factors  ! {factSeq}
+!         dup last first ! {factSeq} primeMax
+!         primes-upto    ! {factSeq} {primeSeq}
+!         swap           ! {primeSeq} {factSeq}
+!         ! For each term of PrimeSeq, if the first first term of the seq is the
+!         ! equal to the current prime number, we launch >engramme on it then we
+!         ! remove the head of seq and we append the result string to the current one
+!         ! else we had "0" to the current number, and we do it with the next number.
+!
+!         [
+!             over ! primeref factSeq primeref
+!             [
+!                 dup             ! primeref seq seq
+!                 first           ! primeref seq factor
+!                 dup             ! primeref seq factor factor
+!                 first           ! primeref seq factor prime
+!             ] dip               ! primeref seq factor prime primeref
+!             2dup = [
+!                                 ! primeref seq factor prime primeref
+!                 2drop last nip  ! primeref exp
+!                 >engramme       ! primeref str
+!                 nip             ! str
+!             ] [
+!                 > [
+!                                 ! primeref seq factor
+!                     3drop "0"   ! str
+!                 ] [
+!                                 ! primeref seq factor
+!                     drop        ! primeref seq
+!                     rest        ! primeref rest
+!                     compose     ! str
+!                 ]
+!             ]
+!         ] curry
+!
+!         [ append ]
+!
+!         map-reduce
+!
+!         ! Add parenthesis
+!         nip "(" ")" surround
+!     ]
+! } case ;
+<PRIVATE
 : engrammefill ( str start end  -- newstart str )
     2dup  ! str start end start end
     =     ! str start end start=end
@@ -62,17 +141,27 @@ IN: engrammes
         swap            ! str++ newstart rest
         seq>engramme    ! (str+++)
     ] if ;
+PRIVATE>
 
-
-: >engramme ( x -- str )
-    dup 2 < [
-        1 = [
-            "1"
-        ] [
-            "0"
-        ] if
-    ] [
-        ! Generate the arguments
+: >engramme ( x -- str ) {
+    { 0 [ "0" ] }
+    { 1 [ "1" ] }
+    [
+      ! Generate the arguments
         group-factors "" swap 2 swap
         seq>engramme
-    ] if ;
+    ]
+} case ;
+
+: <engramme ( str -- x )
+{
+    { "0" [ 0 ] }
+    { "1" [ 1 ] }
+    [
+        ! TODO
+        ! I need to parse the string by location
+        ! example (1110(110)) => { "1" "1" "1" "0" "110" }
+    ! And for each part of the vector we apply
+        drop "COmplex number"
+        ]
+} case ;

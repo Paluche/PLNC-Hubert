@@ -3,13 +3,13 @@
 USING: engrammes kernel io.streams.string tools.test ;
 IN: engrammes.tests
 
-[ 3  ""       ] [ "" 2  2 engrammefill ] unit-test
-[ 5  "0"      ] [ "" 2  3 engrammefill ] unit-test
-[ 7  "00"     ] [ "" 2  5 engrammefill ] unit-test
-[ 11 "000"    ] [ "" 2  7 engrammefill ] unit-test
-[ 13 "0000"   ] [ "" 2 11 engrammefill ] unit-test
-[ 17 "00000"  ] [ "" 2 13 engrammefill ] unit-test
-[ 19 "000000" ] [ "" 2 17 engrammefill ] unit-test
+! [ 3  ""       ] [ "" 2  2 engrammefill ] unit-test
+! [ 5  "0"      ] [ "" 2  3 engrammefill ] unit-test
+! [ 7  "00"     ] [ "" 2  5 engrammefill ] unit-test
+! [ 11 "000"    ] [ "" 2  7 engrammefill ] unit-test
+! [ 13 "0000"   ] [ "" 2 11 engrammefill ] unit-test
+! [ 17 "00000"  ] [ "" 2 13 engrammefill ] unit-test
+! [ 19 "000000" ] [ "" 2 17 engrammefill ] unit-test
 
 
 [ "0"          ] [ 0    >engramme ] unit-test
